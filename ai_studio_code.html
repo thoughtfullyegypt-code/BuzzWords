@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>USMLE Step 1 - Master Diagnostic Buzzword Map</title>
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-surface: #1e293b;
+      --bg-hover: #334155;
+      --border-color: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.2);
+      --badge-histo: #ec4899;
+      --badge-exam: #f59e0b;
+      --badge-rad: #8b5cf6;
+      --badge-lab: #10b981;
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      font-family: var(--font-family);
+      line-height: 1.5;
+      padding-bottom: 60px;
+    }
+
+    header {
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+      padding: 2.5rem 1.5rem 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    h1 span {
+      background: linear-gradient(to right, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 0.25rem;
+    }
+
+    /* Controls Panel */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .search-container {
+      position: relative;
+      flex: 1 1 320px;
+      max-width: 600px;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      color: #fff;
+      padding: 0.75rem 1rem 0.75rem 2.5rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.65rem 1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.15s ease;
+    }
+
+    .btn:hover { background: var(--bg-hover); }
+    .btn.active {
+      background: #0284c7;
+      border-color: #38bdf8;
+      color: #fff;
+    }
+
+    /* System Tabs */
+    .filter-chips {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding: 1rem 0 0.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      scrollbar-width: thin;
+    }
+
+    .chip {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.4rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .chip:hover {
+      color: #fff;
+      background: var(--bg-hover);
+    }
+
+    .chip.active {
+      background: var(--accent);
+      color: #0f172a;
+      border-color: var(--accent);
+    }
+
+    /* Main Container */
+    main {
+      max-width: 1400px;
+      margin: 1.5rem auto 0;
+      padding: 0 1.5rem;
+    }
+
+    .stats-bar {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    /* Table Grid */
+    .table-container {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th {
+      background: #111827;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 1rem;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    td {
+      padding: 1rem;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border-color);
+      vertical-align: top;
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background-color: rgba(255, 255, 255, 0.02); }
+
+    .buzzword-cell {
+      font-weight: 700;
+      color: #f1f5f9;
+      font-size: 0.95rem;
+      max-width: 280px;
+    }
+
+    .system-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      background: #334155;
+      color: #cbd5e1;
+      margin-bottom: 0.35rem;
+    }
+
+    .type-tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      margin-left: 0.4rem;
+    }
+
+    .tag-Histo { background: rgba(236, 72, 153, 0.15); color: var(--badge-histo); border: 1px solid rgba(236, 72, 153, 0.3); }
+    .tag-Exam { background: rgba(245, 158, 11, 0.15); color: var(--badge-exam); border: 1px solid rgba(245, 158, 11, 0.3); }
+    .tag-Rad { background: rgba(139, 92, 246, 0.15); color: var(--badge-rad); border: 1px solid rgba(139, 92, 246, 0.3); }
+    .tag-Lab { background: rgba(16, 185, 129, 0.15); color: var(--badge-lab); border: 1px solid rgba(16, 185, 129, 0.3); }
+
+    .diag-cell {
+      color: #38bdf8;
+      font-weight: 700;
+      min-width: 200px;
+      position: relative;
+    }
+
+    /* Masked state for flashcard testing */
+    .blur-mode .diag-text {
+      filter: blur(5px);
+      background: #475569;
+      color: transparent;
+      user-select: none;
+      cursor: pointer;
+      border-radius: 4px;
+      display: inline-block;
+      transition: filter 0.2s ease;
+    }
+
+    .blur-mode .diag-text:hover {
+      filter: blur(0);
+      background: transparent;
+      color: #38bdf8;
+    }
+
+    .mech-cell {
+      color: #cbd5e1;
+      font-size: 0.85rem;
+      line-height: 1.45;
+    }
+
+    .key-term {
+      color: #fde047;
+      font-weight: 600;
+    }
+
+    /* Empty state */
+    .no-results {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-content">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;">
+        <div>
+          <h1><span>USMLE Step 1</span> Diagnostic Buzzword Map</h1>
+          <p class="subtitle">Search question stem buzzwords directly to pinpoint the exact UWorld diagnosis and underlying mechanism.</p>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="search-container">
+          <svg class="search-icon" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          <input type="text" id="searchInput" class="search-input" placeholder="Type buzzword (e.g. 'apple green', 'schistocyte', 'wire loop', 'currant jelly')...">
+        </div>
+
+        <div class="toolbar-actions">
+          <button id="toggleBlur" class="btn" title="Blur diagnoses so you can test your recall while solving blocks">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            Study Recall Mode
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-chips" id="systemChips">
+      <div class="chip active" data-system="ALL">All Systems</div>
+      <div class="chip" data-system="Cardiovascular">Cardio</div>
+      <div class="chip" data-system="Pulmonology">Pulm</div>
+      <div class="chip" data-system="Gastrointestinal">GI & Liver</div>
+      <div class="chip" data-system="Renal">Renal</div>
+      <div class="chip" data-system="Hematology/Oncology">Heme / Onc</div>
+      <div class="chip" data-system="Neurology/Psychiatry">Neuro / Psych</div>
+      <div class="chip" data-system="Endocrinology">Endocrine</div>
+      <div class="chip" data-system="MSK/Dermatology">MSK & Derm</div>
+      <div class="chip" data-system="Microbiology/ID">Micro / ID</div>
+      <div class="chip" data-system="Reproductive/Genetics">Repro & Embryo</div>
+    </div>
+  </header>
+
+  <main>
+    <div class="stats-bar" id="statsDisplay">Showing 60 High-Yield Entries</div>
+
+    <div class="table-container">
+      <table id="buzzwordTable">
+        <thead>
+          <tr>
+            <th style="width: 28%;">Stem Buzzword / Finding</th>
+            <th style="width: 25%;">Primary Diagnosis</th>
+            <th style="width: 47%;">High-Yield UWorld Associations & Mechanism</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <!-- Populated by JavaScript -->
+        </tbody>
+      </table>
+      <div id="noResults" class="no-results" style="display: none;">
+        No buzzword matches found. Try clearing your search or filters.
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const database = [
+      // CARDIOVASCULAR
+      {
+        system: "Cardiovascular",
+        type: "Exam",
+        buzzword: "Water-hammer / Corrigan pulse + Wide pulse pressure + Head bobbing (de Musset)",
+        diagnosis: "Aortic Regurgitation",
+        mechanism: "Diastolic decrescendo murmur best heard at left sternal border. Backward blood flow into LV increases stroke volume (large systolic peak) with steep diastolic pressure drop."
+      },
+      {
+        system: "Cardiovascular",
+        type: "Exam",
+        buzzword: "Pulsus paradoxus (drop in SBP >10 mmHg on inspiration) + Electrical alternans",
+        diagnosis: "Cardiac Tamponade",
+        mechanism: "Beck triad: hypotension, elevated JVP, distant heart sounds. Pericardial fluid restricts ventricles; inspiratory RV expansion bows the interventricular septum leftward, dropping LV filling and SV."
+      },
+      {
+        system: "Cardiovascular",
+        type: "Histo",
+        buzzword: "Aschoff bodies with plump Anitschkow cells (caterpillar chromatin)",
+        diagnosis: "Acute Rheumatic Fever (Rheumatic Carditis)",
+        mechanism: "Post-Streptococcal pyogenes pharyngitis (Type II hypersensitivity via molecular mimicry between M-protein and human cardiac myosin). Mitral valve is most commonly affected."
+      },
+      {
+        system: "Cardiovascular",
+        type: "Exam",
+        buzzword: "Continuous 'machine-like' murmur loudest at S2 at infraclavicular area",
+        diagnosis: "Patent Ductus Arteriosus (PDA)",
+        mechanism: "Failure of ductus arteriosus closure (derived from left 6th aortic arch). Associated with congenital rubella and prematurity. Close with indomethacin; keep open with PGE1."
+      },
+      {
+        system: "Cardiovascular",
+        type: "Rad",
+        buzzword: "'Boot-shaped heart' (coeur en sabot) on infant chest X-ray",
+        diagnosis: "Tetralogy of Fallot",
+        mechanism: "Caused by anterior/superior deviation of the infundibular septum. 4 components: Pulmonic stenosis, RVH, Overriding aorta, VSD. Cyanotic 'tet spells' relieved by squatting (increases SVR)."
+      },
+      {
+        system: "Cardiovascular",
+        type: "Rad",
+        buzzword: "Notching of ribs (inferior rib margins) + upper vs lower extremity BP discrepancy",
+        diagnosis: "Coarctation of the Aorta (Postductal/Adult type)",
+        mechanism: "Collateral intercostal artery enlargement. Associated with bicuspid aortic valve and Turner syndrome (45,XO). Increased risk of aortic dissection & berry aneurysms."
+      },
+
+      // PULMONOLOGY
+      {
+        system: "Pulmonology",
+        type: "Histo",
+        buzzword: "Curschmann spirals (whorled mucus plugs) + Charcot-Leyden crystals",
+        diagnosis: "Bronchial Asthma",
+        mechanism: "Charcot-Leyden crystals are composed of eosinophil major basic protein / galectin-10. Curschmann spirals are shed epithelium in dense mucus casts. Type I hypersensitivity (IL-4, IL-5, IL-13)."
+      },
+      {
+        system: "Pulmonology",
+        type: "Histo",
+        buzzword: "Golden-brown dumbbell-shaped beaded rods (Ferruginous bodies)",
+        diagnosis: "Asbestosis",
+        mechanism: "Prussian blue stain positive (iron-coated asbestos fibers). IV plates/calcified pleural plaques. Greatly increases risk of bronchogenic carcinoma (far more common than mesothelioma)."
+      },
+      {
+        system: "Pulmonology",
+        type: "Rad",
+        buzzword: "'Eggshell' calcifications of hilar lymph nodes + birefringent silica particles",
+        diagnosis: "Silicosis",
+        mechanism: "Found in sandblasters, miners, and foundries. Silica impairs macrophage phagolysosomal fusion, markedly increasing susceptibility to Tuberculosis (Mycobacterium tuberculosis)."
+      },
+      {
+        system: "Pulmonology",
+        type: "Histo",
+        buzzword: "Bilateral hilar lymphadenopathy + noncaseating granulomas with Schaumann / asteroid bodies",
+        diagnosis: "Sarcoidosis",
+        mechanism: "CD4+ T-cell helper response. Macrophages in granulomas express 1-alpha-hydroxylase producing excess 1,25-(OH)2D3 (hypercalcemia and hypercalciuria). High serum ACE level."
+      },
+      {
+        system: "Pulmonology",
+        type: "Histo",
+        buzzword: "Plexiform lesions in small pulmonary arteries + loud P2",
+        diagnosis: "Pulmonary Arterial Hypertension (PAH)",
+        mechanism: "Inactivating mutation in BMPR2 leading to vascular smooth muscle cell proliferation and remodeling. Endothelin-1 elevated; prostacyclin and NO reduced."
+      },
+
+      // GASTROINTESTINAL & HEPATOLOGY
+      {
+        system: "Gastrointestinal",
+        type: "Histo",
+        buzzword: "Councilman bodies (eosinophilic apoptotic globules in hepatic parenchyma)",
+        diagnosis: "Acute Viral Hepatitis / Yellow Fever",
+        mechanism: "Cytotoxic CD8+ T-cell mediated apoptosis of infected hepatocytes. Yellow fever (Flavivirus, Aedes mosquito vector)."
+      },
+      {
+        system: "Gastrointestinal",
+        type: "Histo",
+        buzzword: "Mallory-Denk bodies (intracytoplasmic eosinophilic tangled cytokeratin filaments)",
+        diagnosis: "Alcoholic Hepatitis",
+        mechanism: "Ubiquitinated cytokeratin intermediate filaments. Typically accompanied by AST > ALT (ratio > 2:1, as AST resides in mitochondria which alcohol directly damages)."
+      },
+      {
+        system: "Gastrointestinal",
+        type: "Rad",
+        buzzword: "'Onion-skin' periductal concentric fibrosis + 'beaded' appearance on MRCP",
+        diagnosis: "Primary Sclerosing Cholangitis (PSC)",
+        mechanism: "Strongly associated with Ulcerative Colitis and positive p-ANCA (MPO). High risk of developing cholangiocarcinoma."
+      },
+      {
+        system: "Gastrointestinal",
+        type: "Lab",
+        buzzword: "Anti-Mitochondrial Antibodies (AMA) in middle-aged female with pruritus",
+        diagnosis: "Primary Biliary Cholangitis (PBC)",
+        mechanism: "Autoimmune destruction of intrahepatic interlobular bile ducts. Histology shows florid duct lesions and granulomatous inflammation. Elevated alkaline phosphatase and IgM."
+      },
+      {
+        system: "Gastrointestinal",
+        type: "Histo",
+        buzzword: "Signet ring cells (mucin-filled cells displacing nucleus to periphery) + linitis plastica",
+        diagnosis: "Diffuse Gastric Adenocarcinoma",
+        mechanism: "Loss of E-cadherin expression (CDH1 mutation). Diffuse infiltration of the gastric wall leading to a thickened 'leather bottle' appearance; not associated with H. pylori."
+      },
+      {
+        system: "Gastrointestinal",
+        type: "Rad",
+        buzzword: "'String sign' on barium swallow / ileocecal barium study",
+        diagnosis: "Crohn Disease",
+        mechanism: "Transmural inflammation causing terminal ileum strictures and stenosis. Skip lesions, cobblestone mucosa, noncaseating granulomas, and creeping fat."
+      },
+      {
+        system: "Gastrointestinal",
+        type: "Histo",
+        buzzword: "PAS-positive, diastase-resistant foamy macrophages in lamina propria",
+        diagnosis: "Whipple Disease (Tropheryma whipplei)",
+        mechanism: "Gram-positive rod. Classic clinical triad: arthralgias, malabsorption diarrhea, and neurologic/cardiac signs. Treat with ceftriaxone then oral TMP-SMX."
+      },
+
+      // RENAL & GENITOURINARY
+      {
+        system: "Renal",
+        type: "Histo",
+        buzzword: "'Spike and dome' subepithelial IgG/C3 deposits on EM",
+        diagnosis: "Membranous Nephropathy",
+        mechanism: "Most common nephrotic syndrome in White adults. Autoantibodies against phospholipase A2 receptor (PLA2R). Secondary causes: HBV, HCV, NSAIDs, solid tumors, SLE."
+      },
+      {
+        system: "Renal",
+        type: "Histo",
+        buzzword: "'Tram-track' appearance on LM + subendothelial deposits with GBM splitting",
+        diagnosis: "Membranoproliferative Glomerulonephritis (MPGN Type 1)",
+        mechanism: "Associated with Hepatitis C and cryoglobulinemia. Mesangial cell proliferation splits the basement membrane. MPGN Type 2 (dense deposit) involves C3 nephritic factor (stabilizes C3 convertase)."
+      },
+      {
+        system: "Renal",
+        type: "Histo",
+        buzzword: "Kimmelstiel-Wilson nodules (nodular glomerulosclerosis)",
+        diagnosis: "Diabetic Nephropathy",
+        mechanism: "Nonenzymatic glycation of efferent arterioles leading to increased GFR and hyperfiltration injury. Mesangial matrix expansion. ACE inhibitors / ARBs reduce progression."
+      },
+      {
+        system: "Renal",
+        type: "Histo",
+        buzzword: "'Wire loop' capillary loops on LM + diffuse proliferative glomerulonephritis",
+        diagnosis: "Lupus Nephritis (Class IV)",
+        mechanism: "Subendothelial immune complex deposits (DNA-anti-dsDNA). Most common and most severe form of renal involvement in SLE. Associated with low complement (C3/C4)."
+      },
+      {
+        system: "Renal",
+        type: "Lab",
+        buzzword: "Muddy brown granular casts on urinalysis",
+        diagnosis: "Acute Tubular Necrosis (ATN)",
+        mechanism: "Ischemia or nephrotoxins (aminoglycosides, iodinated contrast, myoglobin). Affects the proximal tubule and thick ascending limb of loop of Henle (high metabolic demand)."
+      },
+      {
+        system: "Renal",
+        type: "Lab",
+        buzzword: "RBC casts + dysmorphic erythrocytes in urine",
+        diagnosis: "Glomerulonephritis (Nephritic Syndrome)",
+        mechanism: "Bleeding originating from the renal glomerulus (e.g., PSGN, IgA nephropathy, GPA, Goodpasture). Contrast with painless hematuria without casts (bladder cancer/stones)."
+      },
+      {
+        system: "Renal",
+        type: "Histo",
+        buzzword: "'Thyroidization' of kidney (tubules filled with eosinophilic colloid-like casts)",
+        diagnosis: "Chronic Pyelonephritis",
+        mechanism: "Recurrent episodes of acute pyelonephritis typically secondary to vesicoureteral reflux or chronic urinary tract obstruction. Causes blunted calyces and corticomedullary scars."
+      },
+
+      // HEMATOLOGY & ONCOLOGY
+      {
+        system: "Hematology/Oncology",
+        type: "Histo",
+        buzzword: "Auer rods + myeloperoxidase (MPO) positivity + t(15;17)",
+        diagnosis: "Acute Promyelocytic Leukemia (APL / AML M3)",
+        mechanism: "Translocation of PML-RARA fusion gene impairs granulocytic differentiation. High risk of DIC due to tissue factor release. Treat emergently with All-trans retinoic acid (ATRA / Tretinoin)."
+      },
+      {
+        system: "Hematology/Oncology",
+        type: "Histo",
+        buzzword: "'Smudge cells' on peripheral blood smear + CD5+ / CD23+ B-cells",
+        diagnosis: "Chronic Lymphocytic Leukemia (CLL)",
+        mechanism: "Fragile, incompetent malignant small lymphocytes that disrupt easily during smear preparation. Complications: autoimmune hemolytic anemia (AIHA) and Richter transformation to DLBCL."
+      },
+      {
+        system: "Hematology/Oncology",
+        type: "Histo",
+        buzzword: "Reed-Sternberg cells ('owl-eye' bilobed nuclei with prominent nucleoli)",
+        diagnosis: "Hodgkin Lymphoma",
+        mechanism: "CD15+ and CD30+ B-cell origin. Bimodal age distribution. Nodular sclerosis subtype is most common (collagen bands, lacunar cells, mediastinal mass in young females)."
+      },
+      {
+        system: "Hematology/Oncology",
+        type: "Histo",
+        buzzword: "'Starry sky' histology (sheets of blue lymphocytes interspersed with tangible body macrophages) + t(8;14)",
+        diagnosis: "Burkitt Lymphoma",
+        mechanism: "Translocation placing c-myc (chromosome 8) under control of heavy chain IgH promoter (chromosome 14). Associated with Epstein-Barr virus (EBV); jaw mass in endemic African form."
+      },
+      {
+        system: "Hematology/Oncology",
+        type: "Histo",
+        buzzword: "Heinz bodies + Bite cells (degmacytes)",
+        diagnosis: "G6PD Deficiency",
+        mechanism: "X-linked recessive. Inability to generate NADPH via HMP shunt -> reduced glutathione deficiency -> oxidative stress (fava beans, sulfa, primaquine, infection). Splenic macrophages bite out precipitated oxidized hemoglobin."
+      },
+      {
+        system: "Hematology/Oncology",
+        type: "Histo",
+        buzzword: "Schistocytes / Helmet cells + thrombocytopenia + normal PT/PTT",
+        diagnosis: "Thrombotic Thrombocytopenic Purpura (TTP) / HUS",
+        mechanism: "Microangiopathic Hemolytic Anemia (MAHA). TTP: ADAMTS13 deficiency leading to ultra-large vWF multimers that shear passing RBCs. HUS: Shiga toxin (EHEC O157:H7) causing endothelial damage."
+      },
+      {
+        system: "Hematology/Oncology",
+        type: "Histo",
+        buzzword: "Rouleaux formation of RBCs ('stack of coins') + 'Clock-face' chromatin plasma cells",
+        diagnosis: "Multiple Myeloma",
+        mechanism: "Monoclonal IgG or IgA paraprotein (M-spike) neutralizes negative zeta potential of erythrocytes. CRAB criteria: Hypercalcemia, Renal failure, Anemia, Bone lytic lesions."
+      },
+      {
+        system: "Hematology/Oncology",
+        type: "Histo",
+        buzzword: "'Teardrop' poikilocytes (dacrocytes) + 'dry bone marrow tap'",
+        diagnosis: "Primary Myelofibrosis",
+        mechanism: "Clonal megakaryocytes produce TGF-beta, stimulating extensive bone marrow reticulin fibrosis. RBCs are deformed as they squeeze out into peripheral blood. JAK2 V617F mutation."
+      },
+
+      // NEUROLOGY & PSYCHIATRY
+      {
+        system: "Neurology/Psychiatry",
+        type: "Histo",
+        buzzword: "Intracellular eosinophilic inclusions of alpha-synuclein (Lewy bodies) in substantia nigra",
+        diagnosis: "Parkinson Disease",
+        mechanism: "Loss of dopaminergic neurons in substantia nigra pars compacta. Clinical tetrad (TRAP): Tremor (resting, pill-rolling), Rigidity (cogwheel), Akinesia/bradykinesia, Postural instability."
+      },
+      {
+        system: "Neurology/Psychiatry",
+        type: "Histo",
+        buzzword: "Extracellular senile plaques (Aβ-amyloid) + Intracellular neurofibrillary tangles (hyperphosphorylated tau)",
+        diagnosis: "Alzheimer Disease",
+        mechanism: "APP gene on chromosome 21 (early-onset in Down syndrome). Apolipoprotein E4 (ApoE4) increases sporadic risk; ApoE2 is protective. Cortical atrophy prominent in temporoparietal lobes & hippocampus."
+      },
+      {
+        system: "Neurology/Psychiatry",
+        type: "Histo",
+        buzzword: "'Pseudopalisading' pleomorphic tumor cells flanking central necrosis + EGFR amplification",
+        diagnosis: "Glioblastoma Multiforme (Grade IV Astrocytoma)",
+        mechanism: "Most common primary malignant brain tumor in adults. Crosses corpus callosum ('butterfly glioma'). GFAP positive."
+      },
+      {
+        system: "Neurology/Psychiatry",
+        type: "Histo",
+        buzzword: "Psammoma bodies + concentric whorls of meningothelial spindle cells",
+        diagnosis: "Meningioma",
+        mechanism: "Benign, dural-based extra-axial tumor with 'dural tail'. Female predominance (expresses estrogen/progesterone receptors). Associated with Neurofibromatosis Type 2 (NF2)."
+      },
+      {
+        system: "Neurology/Psychiatry",
+        type: "Histo",
+        buzzword: "Rosenthal fibers (thick corkscrew eosinophilic fibers) + cystic lesion with mural nodule",
+        diagnosis: "Pilocytic Astrocytoma",
+        mechanism: "Most common primary pediatric brain tumor; situated in posterior fossa (cerebellum). GFAP positive; excellent prognosis."
+      },
+      {
+        system: "Neurology/Psychiatry",
+        type: "Histo",
+        buzzword: "Homer-Wright rosettes + small round blue cells in cerebellar vermis",
+        diagnosis: "Medulloblastoma",
+        mechanism: "Highly malignant cerebellar primitive neuroectodermal tumor (PNET) in children. Can cause non-communicating hydrocephalus and 'drop metastases' down spinal cord cauda equina."
+      },
+      {
+        system: "Neurology/Psychiatry",
+        type: "Histo",
+        buzzword: "Biphasic histology: cellular Antoni A areas (Verocay bodies) and hypocellular Antoni B areas",
+        diagnosis: "Schwannoma",
+        mechanism: "S100 positive (neural crest origin). Commonly involves CN VIII at cerebellopontine angle (vestibular schwannoma: sensorineural hearing loss and tinnitus). Bilateral in NF2."
+      },
+
+      // ENDOCRINOLOGY
+      {
+        system: "Endocrinology",
+        type: "Histo",
+        buzzword: "'Orphan Annie' eyes (ground-glass empty nuclei) + Nuclear grooves + Psammoma bodies",
+        diagnosis: "Papillary Thyroid Carcinoma",
+        mechanism: "Most common thyroid cancer. Associated with childhood head/neck ionizing radiation, RET/PTC rearrangements, and BRAF V600E mutations. Spreads via lymphatics; excellent prognosis."
+      },
+      {
+        system: "Endocrinology",
+        type: "Histo",
+        buzzword: "Sheets of polygonal cells in amyloid stroma (Congo red positive) derived from C cells",
+        diagnosis: "Medullary Thyroid Carcinoma",
+        mechanism: "Arises from parafollicular C cells (calcitonin secretor; leads to hypocalcemia). Associated with MEN 2A and 2B (germline RET proto-oncogene mutations)."
+      },
+      {
+        system: "Endocrinology",
+        type: "Histo",
+        buzzword: "Hürthle cells (large eosinophilic follicular cells with granular cytoplasm) + lymphoid germinal centers",
+        diagnosis: "Hashimoto Thyroiditis (Chronic Lymphocytic Thyroiditis)",
+        mechanism: "Most common cause of hypothyroidism in iodine-sufficient areas. Anti-thyroid peroxidase (anti-TPO) and anti-thyroglobulin antibodies. Markedly elevated risk of marginal zone B-cell lymphoma."
+      },
+      {
+        system: "Endocrinology",
+        type: "Exam",
+        buzzword: "Episodic headache + sweating (diaphoresis) + tachycardia + refractory paroxysmal HTN",
+        diagnosis: "Pheochromocytoma",
+        mechanism: "Chromaffin cells derived from neural crest. 10% bilateral, 10% extra-adrenal (paraganglioma), 10% malignant. Rule: Always administer α-blocker (phenoxybenzamine) BEFORE β-blocker to prevent lethal hypertensive crisis."
+      },
+      {
+        system: "Endocrinology",
+        type: "Exam",
+        buzzword: "Bilateral adrenal hemorrhage + shock following severe purpuric rash and fever",
+        diagnosis: "Waterhouse-Friderichsen Syndrome",
+        mechanism: "Acute primary adrenal insufficiency secondary to Neisseria meningitidis septicemia with accompanying DIC and endotoxic shock."
+      },
+
+      // MUSCULOSKELETAL, SKIN & CONNECTIVE TISSUE
+      {
+        system: "MSK/Dermatology",
+        type: "Lab",
+        buzzword: "Needle-shaped negatively birefringent crystals (yellow when parallel to slow ray)",
+        diagnosis: "Gout (Monosodium Urate)",
+        mechanism: "Hyperuricemia leading to precipitation in synovium (first MTP joint = podagra). Monosodium urate crystals. Acute attack treatment: NSAIDs (indomethacin), colchicine, glucocorticoids."
+      },
+      {
+        system: "MSK/Dermatology",
+        type: "Lab",
+        buzzword: "Rhomboid-shaped positively birefringent crystals (blue when parallel to slow ray)",
+        diagnosis: "Pseudogout (Calcium Pyrophosphate Dihydrate - CPPD)",
+        mechanism: "Chondrocalcinosis visible on knee cartilage X-ray. Associated with hemochromatosis, hyperparathyroidism, and joint trauma."
+      },
+      {
+        system: "MSK/Dermatology",
+        type: "Lab",
+        buzzword: "Anti-cyclic citrullinated peptide (anti-CCP) antibodies + symmetric morning stiffness >1 hr",
+        diagnosis: "Rheumatoid Arthritis",
+        mechanism: "HLA-DR4 association. Synovial pannus formation eroding cartilage and bone. Cervical spine subluxation danger during intubation."
+      },
+      {
+        system: "MSK/Dermatology",
+        type: "Lab",
+        buzzword: "Anti-Smith and anti-double-stranded DNA (anti-dsDNA)",
+        diagnosis: "Systemic Lupus Erythematosus (SLE)",
+        mechanism: "Type III hypersensitivity (immune complex deposition). Anti-dsDNA titers correlate with active disease and renal involvement (lupus nephritis). Anti-Smith is highly specific."
+      },
+      {
+        system: "MSK/Dermatology",
+        type: "Lab",
+        buzzword: "Anti-centromere antibodies (ACA)",
+        diagnosis: "Limited Cutaneous Systemic Sclerosis (CREST Syndrome)",
+        mechanism: "Calcinosis cutis, Raynaud phenomenon, Esophageal dysmotility, Sclerodactyly, Telangiectasia. Diffuse systemic sclerosis instead presents with anti-Scl-70 (anti-DNA topoisomerase I)."
+      },
+      {
+        system: "MSK/Dermatology",
+        type: "Lab",
+        buzzword: "Anti-Ro (SSA) and Anti-La (SSB) autoantibodies",
+        diagnosis: "Sjögren Syndrome",
+        mechanism: "Autoimmune destruction of lacrimal and salivary exocrine glands (dry eyes, xerostomia). Pregnant women with anti-Ro risk having infants with congenital complete heart block."
+      },
+      {
+        system: "MSK/Dermatology",
+        type: "Histo",
+        buzzword: "Intraepidermal split + acantholysis (tombstone pattern) + 'net-like' IgG on IF",
+        diagnosis: "Pemphigus Vulgaris",
+        mechanism: "Antibodies against Desmoglein-1 and Desmoglein-3 (desmosomes). Nikolsky sign positive (flaccid bullae that rupture easily; oral mucosal involvement is classic). Bullous pemphigoid is hemidesmosome/subepidermal."
+      },
+      {
+        system: "MSK/Dermatology",
+        type: "Rad",
+        buzzword: "'Sunburst' periosteal reaction + Codman triangle at metaphysis",
+        diagnosis: "Osteosarcoma",
+        mechanism: "Bimodal age (teens and elderly with Paget disease). Associated with retinoblastoma (RB1) and Li-Fraumeni (TP53). Produces malignant osteoid matrix."
+      },
+      {
+        system: "MSK/Dermatology",
+        type: "Rad",
+        buzzword: "'Onion-skin' laminated periosteal reaction in diaphysis of long bones + t(11;22)",
+        diagnosis: "Ewing Sarcoma",
+        mechanism: "Small round blue cell neuroectodermal tumor in young boys. Translocation t(11;22) fuses EWSR1 and FLI1. Highly aggressive."
+      },
+      {
+        system: "MSK/Dermatology",
+        type: "Rad",
+        buzzword: "'Soap bubble' lytic lesion in epiphysis of long bone (distal femur/proximal tibia)",
+        diagnosis: "Giant Cell Tumor of Bone (Osteoclastoma)",
+        mechanism: "Expresses high levels of RANKL on stromal cells, recruiting multinucleated giant osteoclast-like cells. Typically benign but locally aggressive."
+      },
+
+      // MICROBIOLOGY & INFECTIOUS DISEASE
+      {
+        system: "Microbiology/ID",
+        type: "Histo",
+        buzzword: "Cowdry A inclusions (large eosinophilic nuclear inclusions surrounded by clear halo)",
+        diagnosis: "Herpes Simplex Virus (HSV) / Varicella Zoster (VZV)",
+        mechanism: "Multinucleated giant cells visualized on Tzanck smear. Encephalitis usually localizes to the temporal lobe (HSV-1)."
+      },
+      {
+        system: "Microbiology/ID",
+        type: "Histo",
+        buzzword: "'Owl-eye' intranuclear inclusion bodies surrounded by clear halo",
+        diagnosis: "Cytomegalovirus (CMV)",
+        mechanism: "Double-stranded enveloped DNA virus (HHV-5). Retinitis in HIV patients with CD4 < 50; basophilic/eosinophilic inclusions in endothelial cells and pneumocytes."
+      },
+      {
+        system: "Microbiology/ID",
+        type: "Histo",
+        buzzword: "Negri bodies (eosinophilic intracytoplasmic inclusions in Purkinje cells of cerebellum / hippocampus)",
+        diagnosis: "Rabies Virus (Rhabdoviridae)",
+        mechanism: "Bullet-shaped ssRNA virus. Binds to nicotinic acetylcholine receptors at neuromuscular junction and migrates retrograde along peripheral nerves to CNS."
+      },
+      {
+        system: "Microbiology/ID",
+        type: "Exam",
+        buzzword: "'Sulfur granules' in yellow draining sinus tracts along the jaw/cervicofacial area",
+        diagnosis: "Actinomyces israelii",
+        mechanism: "Gram-positive, branching, filamentous anaerobe (non-acid-fast, unlike Nocardia). Normal oral flora that establishes infection following dental work or oral trauma. Treat with high-dose penicillin."
+      },
+      {
+        system: "Microbiology/ID",
+        type: "Lab",
+        buzzword: "India ink preparation showing clear halo around yeast + mucicarmine-positive red capsule",
+        diagnosis: "Cryptococcus neoformans",
+        mechanism: "Heavily encapsulated yeast found in pigeon droppings. Transmitted via inhalation; causes opportunistic meningitis in immunocompromised patients (soap bubble brain lesions)."
+      },
+      {
+        system: "Microbiology/ID",
+        type: "Rad",
+        buzzword: "'Currant jelly' sputum + cavitation in right upper lobe of chronic alcoholic",
+        diagnosis: "Klebsiella pneumoniae",
+        mechanism: "Gram-negative bacillus with abundant mucoid polysaccharide capsule (antiphagocytic). Fast lactose fermenter (pink on MacConkey agar)."
+      },
+      {
+        system: "Microbiology/ID",
+        type: "Histo",
+        buzzword: "Methenamine silver stain showing cup-shaped / 'crushed ping-pong ball' cysts",
+        diagnosis: "Pneumocystis jirovecii Pneumonia (PCP)",
+        mechanism: "Atypical opportunistic fungus in immunocompromised (CD4 < 200). Causes diffuse bilateral interstitial infiltrates ('bat-wing' on CXR). First line: TMP-SMX."
+      },
+
+      // REPRODUCTIVE, EMBRYOLOGY & GENETICS
+      {
+        system: "Reproductive/Genetics",
+        type: "Histo",
+        buzzword: "Call-Exner bodies (granulosa cells arranged haphazardly around eosinophilic fluid spaces)",
+        diagnosis: "Granulosa Cell Tumor of Ovary",
+        mechanism: "Most common malignant ovarian sex-cord stromal tumor. Produces excess estrogen (precocious puberty in girls; postmenopausal vaginal bleeding, endometrial hyperplasia) and Inhibin."
+      },
+      {
+        system: "Reproductive/Genetics",
+        type: "Histo",
+        buzzword: "Schiller-Duval bodies (glomerulus-like papillary structure with central vessel) + high AFP",
+        diagnosis: "Yolk Sac Tumor (Endodermal Sinus Tumor)",
+        mechanism: "Most common testicular malignant germ cell tumor in boys <3 years old; also occurs in ovary. Alpha-fetoprotein (AFP) is reliably elevated."
+      },
+      {
+        system: "Reproductive/Genetics",
+        type: "Histo",
+        buzzword: "Reinke crystals (eosinophilic cytoplasmic rod-like inclusions)",
+        diagnosis: "Leydig Cell Tumor",
+        mechanism: "Sex-cord stromal tumor that produces androgens (causes precocious puberty in young boys or gynecomastia in adult men due to peripheral aromatization)."
+      },
+      {
+        system: "Reproductive/Genetics",
+        type: "Rad",
+        buzzword: "'Snowstorm' appearance on ultrasound + β-hCG markedly >100,000 mIU/mL",
+        diagnosis: "Complete Hydatidiform Mole",
+        mechanism: "Usually 46,XX (empty ovum fertilized by single sperm that duplicates its genome: androgenetic). Markedly enlarged uterus without fetal parts; high risk of choriocarcinoma."
+      },
+      {
+        system: "Reproductive/Genetics",
+        type: "Exam",
+        buzzword: "Streak ovaries + Webbed neck (cystic hygroma) + Bicuspid aortic valve / Coarctation",
+        diagnosis: "Turner Syndrome (45,XO)",
+        mechanism: "Complete or partial monosomy X, most commonly due to paternal meiotic nondisjunction. Short stature, primary amenorrhea (hypergonadotropic hypogonadism due to dysgenetic streak ovaries)."
+      },
+      {
+        system: "Reproductive/Genetics",
+        type: "Exam",
+        buzzword: "Tall eunuchoid habitus + small firm atrophic testes + gynecomastia + Barr body present",
+        diagnosis: "Klinefelter Syndrome (47,XXY)",
+        mechanism: "Primary testicular failure with dysgenesis of seminiferous tubules (decreased inhibin -> high FSH) and abnormal Leydig cells (decreased testosterone -> high LH)."
+      }
+    ];
+
+    // DOM Elements
+    const searchInput = document.getElementById('searchInput');
+    const systemChips = document.getElementById('systemChips');
+    const tableBody = document.getElementById('tableBody');
+    const statsDisplay = document.getElementById('statsDisplay');
+    const noResults = document.getElementById('noResults');
+    const toggleBlurBtn = document.getElementById('toggleBlur');
+
+    let currentSystem = 'ALL';
+    let searchQuery = '';
+    let isBlurMode = false;
+
+    // Render Table Rows
+    function renderTable() {
+      const filtered = database.filter(item => {
+        const matchesSystem = currentSystem === 'ALL' || item.system === currentSystem;
+        const matchesQuery = 
+          item.buzzword.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item.diagnosis.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item.mechanism.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesSystem && matchesQuery;
+      });
+
+      statsDisplay.innerText = `Showing ${filtered.length} of ${database.length} High-Yield Entries`;
+
+      if (filtered.length === 0) {
+        tableBody.innerHTML = '';
+        noResults.style.display = 'block';
+        return;
+      }
+
+      noResults.style.display = 'none';
+
+      tableBody.innerHTML = filtered.map(item => `
+        <tr>
+          <td class="buzzword-cell">
+            <div style="display: flex; align-items: center; margin-bottom: 4px;">
+              <span class="system-badge">${item.system}</span>
+              <span class="type-tag tag-${item.type}">${item.type}</span>
+            </div>
+            <div>${highlightMatch(item.buzzword, searchQuery)}</div>
+          </td>
+          <td class="diag-cell">
+            <span class="diag-text">${highlightMatch(item.diagnosis, searchQuery)}</span>
+          </td>
+          <td class="mech-cell">
+            ${highlightMatch(item.mechanism, searchQuery)}
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Keyword highlighter for fast visual scanning
+    function highlightMatch(text, query) {
+      if (!query || query.trim() === '') return text;
+      const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+      return text.replace(regex, `<mark style="background: rgba(253, 224, 71, 0.35); color: #fff; padding: 0 2px; border-radius: 2px;">$1</mark>`);
+    }
+
+    // Search Input Listener
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.trim();
+      renderTable();
+    });
+
+    // System Filter Listener
+    systemChips.addEventListener('click', (e) => {
+      const chip = e.target.closest('.chip');
+      if (!chip) return;
+
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      currentSystem = chip.getAttribute('data-system');
+      renderTable();
+    });
+
+    // Toggle Active Recall Blur Mode
+    toggleBlurBtn.addEventListener('click', () => {
+      isBlurMode = !isBlurMode;
+      document.body.classList.toggle('blur-mode', isBlurMode);
+      toggleBlurBtn.classList.toggle('active', isBlurMode);
+      toggleBlurBtn.innerHTML = isBlurMode 
+        ? `<svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg> Mask Active (Hover to Reveal)`
+        : `<svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg> Study Recall Mode`;
+    });
+
+    // Initial render
+    renderTable();
+  </script>
+</body>
+</html>
